@@ -17,7 +17,6 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @RequestMapping("virustest")
-@CrossOrigin(origins = "*")
 public class VirusTestController {
 
    private VirusTestService virusTestService;

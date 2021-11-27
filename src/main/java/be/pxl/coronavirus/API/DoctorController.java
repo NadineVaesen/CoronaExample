@@ -11,7 +11,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("doctorCreation")
-@CrossOrigin(origins = "*")
 public class DoctorController {
 
     private final DoctorService doctorService;

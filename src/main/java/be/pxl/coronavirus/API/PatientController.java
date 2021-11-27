@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("doctor")
-@CrossOrigin(origins = "*")
+
 public class PatientController {
 
     private final PatientService patientService;
@@ -22,7 +22,7 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @Secured({"ROLE_DOCTOR"})
+    @Secured("ROLE_DOCTOR")
     @GetMapping("{id}/patients")
     public ResponseEntity<List<PatientDTO>> getPatients(@PathVariable("id") int doctorNumber){
         List<PatientDTO> result = patientService.getPatientsByDoctor(doctorNumber);
@@ -34,16 +34,17 @@ public class PatientController {
         }
     }
 
-    @Secured({"ROLE_DOCTOR","ROLE_PATIENT"})
     @PostMapping("{id}")
+    @Secured({"ROLE_DOCTOR","ROLE_PATIENT"})
     public ResponseEntity<Long> createPatient(@PathVariable("id") int doctorNumber, @RequestBody @Valid PatientResource patientResource){
         Long result = patientService.createPatient(patientResource, doctorNumber);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @Secured({"ROLE_DOCTOR"})
+    @Secured("ROLE_DOCTOR")
     @GetMapping("{doctorNumber}/positive")
     public ResponseEntity<List<PatientDTO>> getPatientsByDoctorAndPositive(@PathVariable("doctorNumber") int doctorNumber){
+        System.out.println("in getpatientsbydoctor and positive");
         List<PatientDTO> patientDTOList = patientService.getPatientsByDoctorAndPositive(doctorNumber);
         if (patientDTOList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
